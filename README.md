@@ -4,7 +4,9 @@ A learning project for building a production-style, DDD-based e-commerce platfor
 
 ## Project Plan
 
-The complete goals, architecture, technology choices, and development phases are in [ecommerce_project_plan.md](ecommerce_project_plan.md).
+The complete goals, architecture, technology choices, and development phases are in [plans/project_plan.md](plans/project_plan.md).
+
+Detailed implementation plans and task tracking belong in numbered phase folders under `plans/`, using `plans/phase-XX-short-name/plan.md` and `plans/phase-XX-short-name/tasks.md`.
 
 This repository is currently at the documentation and architecture-scaffolding stage. Application modules and build configuration will be added as their phases begin.
 
