@@ -20,6 +20,9 @@ description: "Handle Git repository tasks including status, diffs, branches, sta
 
 ## Commit Messages
 
+- Make every commit atomic: it should implement one cohesive change and leave the repository in a coherent state.
+- If requested work contains independent concerns, split it into separate, reviewable commits in dependency order. Keep tightly coupled changes together only when they form one logical change.
+- Stage and inspect each commit's files and diff separately, and run the relevant checks for that change when practical.
 - Use exactly one line: `<Operation> <intent>`.
 - Start with a capitalized operation verb that describes the change, such as `Add`, `Delete`, `Update`, `Modify`, or `Refactor`.
 - Keep the message in simple present, concise, and specific. Do not use past tense, conventional-commit prefixes, or a trailing period.
