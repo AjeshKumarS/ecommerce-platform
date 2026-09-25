@@ -1,0 +1,27 @@
+# Java and Maven
+**/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# IDEs and operating systems
+.idea/
+*.iml
+.DS_Store
+
+# Logs and local environment
+*.log
+.env
+.env.*
+!.env.example
+
+# Frontend tooling (for future web clients)
+node_modules/
+.next/
+dist/
+coverage/
+
+# Local infrastructure state
+data/
+volumes/
