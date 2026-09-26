@@ -535,6 +535,8 @@ Cart
 
 Cart owns its items.
 
+When checkout begins, refresh product prices and calculate the checkout total using current catalog prices; cart prices are not locked. Browsing remains anonymous, but adding items to a cart and checking out require authentication. Associate authenticated activity with the user's ID. Guest users are not supported initially; create a short cookie-based guest identity extension plan before implementing that future capability.
+
 ## Order
 
 Aggregate:
@@ -545,9 +547,13 @@ Order
  ├── CustomerId
  ├── OrderItems
  ├── Money
- ├── ShippingAddressSnapshot
+ ├── DeliveryDestinationId
  └── OrderStatus
 ```
+
+Use a synthetic, non-identifying destination ID for the planned mock delivery workflow. Do not persist a real shipping address or other direct PII.
+
+The order records checkout-refreshed item prices and total. If a refreshed total differs from what the shopper last saw, display the new total and require explicit customer confirmation before order submission.
 
 ## Inventory
 
@@ -566,6 +572,8 @@ Invariant:
 ```text
 AvailableStock >= 0
 ```
+
+Inventory reservation is all-or-nothing. Use one configurable timeout for every product, with an initial value of 15 minutes.
 
 ## Payment
 
@@ -1607,6 +1615,8 @@ Implement:
 
 Introduce gRPC metadata for internal identity propagation where appropriate.
 
+Browsing the catalog does not require authentication. Adding items to a cart and checkout do. Assign an opaque user ID to authenticated users and use it for ownership and analytics. Do not require or persist direct PII for registration or authentication; credential handling must not store plaintext secrets. Before implementing identity-dependent cart behavior, create the planned short guest-checkout extension plan describing later cookie-based guest identification.
+
 ---
 
 # Phase 5 — Cart + Order
@@ -1620,7 +1630,7 @@ Build:
 - Add item
 - Remove item
 - Quantity
-- Price snapshot
+- Refresh product prices when checkout begins and calculate the order total from current prices
 
 ### Order
 
@@ -1640,6 +1650,8 @@ Order
 ```
 
 Use gRPC where an immediate cross-service response is necessary.
+
+Use a mock payment service; do not integrate a real payment provider in the initial workflow. Use a mock delivery service with synthetic destination IDs, randomized status transitions over a configurable duration, and a 5% delivery failure rate. Tests must inject deterministic outcomes and contain no randomness. Do not store direct PII. Define data access, retention, and deletion rules for linkable user-ID analytics in a future phase before implementing analytics retention.
 
 ---
 
@@ -1809,9 +1821,13 @@ ProductViewed
 SearchPerformed
 ProductAddedToCart
 OrderCreated
+CustomerProductInterestRecorded
+CustomerCategoryInterestRecorded
 ```
 
 Store high-volume events.
+
+Provide aggregates for most-searched products and most-added-to-cart products, plus product/category interests keyed by authenticated user ID. Do not include direct PII in events or analytics. The initial system has no deletion rules; define data-lifecycle and deletion behavior in a future phase before retaining this data.
 
 Create query-driven tables.
 

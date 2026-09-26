@@ -2,7 +2,7 @@
 
 ## Status
 
-**In Progress.** `plans/project_plan.md` already contains an initial project goal, candidate bounded contexts, example service ownership, communication patterns, aggregate sketches, and the Phase 0 checklist. The repository does not yet contain validated, project-specific domain artifacts: `docs/architecture/README.md` is an outline, and there are no context-map, requirements, domain-model, communication-matrix, or workflow documents. There is no service implementation to verify against.
+**In Progress (P0-01 complete).** `plans/project_plan.md` contains the initial architecture proposal, and the project owner has reviewed the business scope, user journeys, core rules, assumptions, and non-goals in [`docs/architecture/business-requirements.md`](../../docs/architecture/business-requirements.md). The remaining Phase 0 artifacts are not yet present: bounded contexts, context map, domain model, communication matrix, domain events, and workflow documentation. There is no service implementation to verify against.
 
 ## Objective
 
