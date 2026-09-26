@@ -6,16 +6,16 @@
 - For tracking phase task progress or synchronizing task statuses with implementation evidence, use the [phase-task-tracker skill](.claude/skills/phase-task-tracker/SKILL.md).
 - For Git status, diffs, branches, commits, merges, or other repository operations, use the [Git skill](.claude/skills/git/SKILL.md). It defines the `main` trunk workflow and commit message format.
 
-## Workflow: checks
+## Workflow: pre-check
 
-When asked to run checks, complete the pre-check before the post-check.
-
-### Pre-check
+When asked to run checks, run this workflow first.
 
 1. Discover and run all applicable project tests, builds, lint, and type checks. Prefer the full test suite when available; report commands and results, including checks that could not run.
 2. Run the reviewer skill against the current changes, including any additional focused checks it needs.
 
-### Post-check
+## Workflow: post-check
+
+When asked to run checks, run this workflow after the pre-check completes.
 
 1. Run the documentation skill to update docs affected by the changes. If none are affected, report that instead of making unrelated edits.
 2. If a phase plan is created or changed, run the project-planning skill so its `tasks.md` is created or reconciled with the plan while preserving progress for unchanged tasks.
